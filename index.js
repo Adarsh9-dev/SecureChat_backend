@@ -16,6 +16,12 @@ app.use(express.json());
 app.use(cors());
 //createReadStream create a readable stream for reading data from a file
 
+mongoose.set('strictQuery', true);
+//Mongodb Connection
+mongoose.connect(process.env.MONGODB,{ useNewUrlParser: true })
+.then(()=>console.log("DB Connected"))
+.catch((err)=>console.log("DB Not Connected",err))
+
 
 const httpServer = createServer(app)
 
@@ -84,11 +90,6 @@ io.on("connection",(socket) => {
 })
 
 
-mongoose.set('strictQuery', true);
-//Mongodb Connection
-mongoose.connect(process.env.MONGODB)
-.then(()=>console.log("DB Connected"))
-.catch((err)=>console.log("DB Not Connected",err))
 
 //Routing
 app.get("/image/:id",(req,res)=> {
