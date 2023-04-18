@@ -84,6 +84,7 @@ io.on("connection",(socket) => {
 })
 
 
+mongoose.set('strictQuery', true);
 //Mongodb Connection
 mongoose.connect(process.env.MONGODB)
 .then(()=>console.log("DB Connected"))
