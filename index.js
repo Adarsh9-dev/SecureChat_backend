@@ -87,7 +87,7 @@ io.on("connection",(socket) => {
 //Mongodb Connection
 mongoose.connect(process.env.MONGODB)
 .then(()=>console.log("DB Connected"))
-.catch(()=>console.log("DB Not Connected"))
+.catch((err)=>console.log("DB Not Connected",err))
 
 //Routing
 app.get("/image/:id",(req,res)=> {
