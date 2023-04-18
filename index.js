@@ -11,7 +11,7 @@ import {createServer} from "http";
 dotenv.config();
 
 const app = express();
-
+app.use(express.urlencoded());
 app.use(express.json());
 app.use(cors());
 //createReadStream create a readable stream for reading data from a file
