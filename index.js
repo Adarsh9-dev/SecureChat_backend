@@ -18,7 +18,7 @@ app.use(cors());
 
 mongoose.set('strictQuery', true);
 //Mongodb Connection
-mongoose.connect(process.env.MONGODB_CON)
+mongoose.connect("mongodb+srv://Adarsh:qEXLiMWjB4Vvy6y7@cluster0.sf8bwna.mongodb.net/chat_application?retryWrites=true&w=majority")
 .then(()=>console.log("DB Connected"))
 .catch((err)=>console.log("DB Not Connected",err))
 
