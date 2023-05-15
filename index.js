@@ -11,9 +11,29 @@ import {createServer} from "http";
 dotenv.config();
 
 const app = express();
-app.use(express.urlencoded());
+app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+    origin: "https://securechatapplication.netlify.app"
+}));
+
+app.use((req, res, next) => {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    next();
+});
+
+
+//Routing
+
+app.use('/user',authRoute);
+app.use('/conversation',convRoute);
+
+app.use((err,req,res,next)=> {
+    return res.status(500).json({"message": "Something going wrong"});
+})
+
+
+
 //createReadStream create a readable stream for reading data from a file
 
 mongoose.set('strictQuery', true);
@@ -31,6 +51,7 @@ const io = new Server (httpServer, {
     cors: {
         origin: "https://securechatapplication.netlify.app/",
         methods: ["GET","POST"],
+        allowedHeaders: ['Content-Type']
     },
 });
 
@@ -90,8 +111,6 @@ io.on("connection",(socket) => {
 })
 
 
-
-//Routing
 app.get("/image/:id",(req,res)=> {
     // console.log(req.params.id)
     const imageStream = fs.createReadStream(`uploads/${req.params.id}`)
@@ -99,17 +118,7 @@ app.get("/image/:id",(req,res)=> {
     //Pipe method convert output of one stream to another another stream as input and provide a way so that we can easyly transfer your data
 })
 
-app.use('/user',authRoute);
-app.use('/conversation',convRoute);
-
-app.use((err,req,res,next)=> {
-    return res.status(500).json({"message": "Something going wrong"});
-})
-
 
 httpServer.listen(process.env.PORT,()=> {
     console.log("I am listening");
 })
-
-
-
