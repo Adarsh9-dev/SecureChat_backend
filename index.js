@@ -108,14 +108,14 @@ io.on("connection",(socket) => {
 })
 
 
-app.get("/image/:id",(req,res)=> {
+app.get("/image/:id",async (req,res)=> {
     // console.log(req.params.id)
-    const imageStream = fs.createReadStream(`uploads/${req.params.id}`)
+    const imageStream = await fs.createReadStream(`uploads/${req.params.id}`)
     imageStream.pipe(res)
     //Pipe method convert output of one stream to another another stream as input and provide a way so that we can easyly transfer your data
 })
 
 
-httpServer.listen(process.env.PORT,()=> {
+httpServer.listen(process.env.PORT || 8000,()=> {
     console.log("I am listening");
 })
