@@ -17,10 +17,7 @@ app.use(cors({
     origin: "https://securechatapplication.netlify.app"
 }));
 
-app.use((req, res, next) => {
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    next();
-});
+
 
 
 //Routing
@@ -49,7 +46,7 @@ const httpServer = createServer(app)
 // Connection to Socket.io
 const io = new Server (httpServer, {
     cors: {
-        origin: "https://securechatapplication.netlify.app/",
+        origin: "https://securechatapplication.netlify.app",
         methods: ["GET","POST"],
         allowedHeaders: ['Content-Type']
     },
